@@ -1,0 +1,27 @@
+.wrapper{
+	margin: 0 auto;
+	width: 960px;
+	height: 600px;
+	-webkit-writing-mode: vertical-rl  ;
+	writing-mode: vertical-rl  ;
+	padding: 50px;
+	color:#666666;
+	font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif;
+}
+.article{
+	border: 1px #666666 solid;
+	padding: 20px;
+	overflow: hidden;
+	width:200px;
+	margin: 0 20px;
+}
+.title{
+	padding:0 15px;
+}
+.author{
+	float: right;
+}
+.content{
+	font-size: 19px;
+	line-height: 1.7;
+}
