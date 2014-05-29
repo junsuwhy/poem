@@ -1,9 +1,9 @@
-a:link,a:visited{
-	color: #666 !important;
+body a:link,body a:visited{
+	color: #666 ;
 }
-a:hover{
-	text-decoration: none !important;
-	color: #ccc !important;
+body a:hover{
+	text-decoration: none ;
+	color: #ccc ;
 }
 
 .wrapper{
@@ -23,15 +23,16 @@ a:hover{
 	/*width:200px;*/
 	margin: 0 20px;
 }
-.title{
-	font-size: 28px;
-	display: inline;
-	padding:15px 5px;
-	margin: 0 0 0 20px;
+h1{
 	background-color: #999;
+	/*color:#fff;*/
+	display: inline;
+	padding: 20px 10px;
+}
+h1 a:visited,h1 a:link{
 	color:#fff;
 }
-.title.in-index{
+.title{
 	padding:0 15px;
 	margin: 0;
 	background: none;

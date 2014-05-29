@@ -45,7 +45,7 @@ $().ready(function() {
         readTextFile("txt-articles/" + d[i].filename + ".txt", function(text) {
           title = text.split(/\n=+\n/)[0];
           content = text.split(/\n=+\n/)[1];
-          $article.children('.title').addClass('in-index').text(title);
+          $article.children('.title').text(title);
           // $article.children('.content').html(textToHtml(content));
           $article.children('.content').hide();
 
