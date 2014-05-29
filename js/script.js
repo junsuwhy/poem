@@ -18,14 +18,21 @@ function readTextFile(file, callback) {
  * @return {[type]}      [description]
  */
 function textToHtml(text) {
+  while (text[0] == "\n") {
+    text = text.substr(1);
+  }
   return text.replace(/\n/g, "<br>");
 }
 
 
 $().ready(function() {
+  loading_start = true;
+
   var a_x = document.URL.split("?a=")[1];
   if (a_x) {
     //單一文章模式
+    $('body').addClass('body-article');
+    //
     readTextFile("txt-articles/" + a_x + ".txt", function(text) {
       title = text.split(/\n=+\n/)[0];
       content = text.split(/\n=+\n/)[1];
@@ -33,12 +40,15 @@ $().ready(function() {
       $('.title').text(title);
       $('.content').html(textToHtml(content));
 
+      after_loading();
+
     });
   } else {
     //目錄模式
     d3.csv("csv-index/index.csv", function(d) {
       return d;
     }, function(e, d) {
+      $('body').addClass('body-index');
       $orig_article = $('.article');
       for (var i = 0; i < d.length; i++) {
         $article = $orig_article.clone();
@@ -46,8 +56,8 @@ $().ready(function() {
           title = text.split(/\n=+\n/)[0];
           content = text.split(/\n=+\n/)[1];
           $article.children('.title').text(title);
-          // $article.children('.content').html(textToHtml(content));
-          $article.children('.content').hide();
+          $article.children('.content').html(textToHtml(content));
+          // $article.children('.content').hide();
 
         });
 
@@ -55,6 +65,8 @@ $().ready(function() {
         $article.appendTo('.wrapper');
         x = '<a href="./?a=' + d[i].filename + '">';
         $article.wrap(x);
+
+        after_loading();
       };
       $orig_article.hide();
 
@@ -63,3 +75,33 @@ $().ready(function() {
   }
 
 })
+
+function after_loading() {
+  // if (loading_start) {
+  $('a').off("mouseenter mouseleave click");
+  $('a').hover(function() {
+    $(this).find('h2').animate({
+      'color': '#ccc'
+    });
+  }, function() {
+    $(this).find('h2').animate({
+      'color': '#666'
+    });
+  });
+  //使所有 a 失效
+  // $('a').data('href', function() {
+  //   return $(this).attr('href');
+  // }).attr('onClick', "javascript: void(0);")
+  //   .attr('href', 'javascript:void(0)');
+  //   
+  // 使 a 變成廷展而不是轉網頁  
+  // $('a').click(function() {
+  //   $(this).find('.article').animate({
+  //     width: '100%',
+  //   }, 'slow');
+  //   $(this).find('.trans').hide('slow');
+  // });
+
+  // }
+  loading_start = false;
+}
