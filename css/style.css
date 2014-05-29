@@ -1,7 +1,15 @@
+a:link,a:visited{
+	color: #666 !important;
+}
+a:hover{
+	text-decoration: none !important;
+	color: #ccc !important;
+}
+
 .wrapper{
 	margin: 0 auto;
 	width: auto;
-	height: 600px;
+	height: auto;
 	-webkit-writing-mode: vertical-rl  ;
 	writing-mode: vertical-rl  ;
 	padding: 50px;
@@ -9,14 +17,25 @@
 	font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif;
 }
 .article{
-	border: 1px #666666 solid;
+	border: 1px #999 solid;
 	padding: 20px;
 	overflow: hidden;
 	/*width:200px;*/
 	margin: 0 20px;
 }
 .title{
+	font-size: 28px;
+	display: inline;
+	padding:15px 5px;
+	margin: 0 0 0 20px;
+	background-color: #999;
+	color:#fff;
+}
+.title.in-index{
 	padding:0 15px;
+	margin: 0;
+	background: none;
+	color:#666;
 }
 .author{
 	float: right;

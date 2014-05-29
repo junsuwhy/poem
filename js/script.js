@@ -29,6 +29,7 @@ $().ready(function() {
     readTextFile("txt-articles/" + a_x + ".txt", function(text) {
       title = text.split(/\n=+\n/)[0];
       content = text.split(/\n=+\n/)[1];
+      document.title = title;
       $('.title').text(title);
       $('.content').html(textToHtml(content));
 
@@ -44,16 +45,16 @@ $().ready(function() {
         readTextFile("txt-articles/" + d[i].filename + ".txt", function(text) {
           title = text.split(/\n=+\n/)[0];
           content = text.split(/\n=+\n/)[1];
-          $article.children('.title').text(title);
-          $article.children('.content').html(textToHtml(content));
-
-
+          $article.children('.title').addClass('in-index').text(title);
+          // $article.children('.content').html(textToHtml(content));
+          $article.children('.content').hide();
 
         });
-        x = '<a href="./?a=' + d[i].filename + '">';
-        $article.wrap(x);
+
         // $article.wrap($("<a>").attr('href', './?a=' + d[i].filename));
         $article.appendTo('.wrapper');
+        x = '<a href="./?a=' + d[i].filename + '">';
+        $article.wrap(x);
       };
       $orig_article.hide();
 
