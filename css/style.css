@@ -1,3 +1,7 @@
+body{
+	background-color: #e8e8e8;
+}
+
 a:link,a:visited{
 	text-decoration: none ;
 	color: #666 ;
@@ -18,13 +22,16 @@ a:hover{
 	padding: 50px;
 	color:#666666;
 	font-family: 'ヒラギノ明朝 Pro W3','Hiragino Mincho Pro','HiraMinProN-W3','ＭＳ 明朝','MS Mincho',serif;
+	overflow: hidden;
 }
 .article{
+	background-color: #fff;
 	border: 1px #ccc solid;
 	padding: 10px;
 	overflow: hidden;
 	margin: 0 20px;
 	position:relative;
+	box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
 .body-index .article{
 	width:130px;
@@ -38,6 +45,7 @@ h1{
 	/*color:#fff;*/
 	display: inline;
 	padding: 20px 10px;
+	box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
 a:visited h1 ,a:link h1{
 	color:#fff;
@@ -62,4 +70,5 @@ a:visited h1 ,a:link h1{
 	height:100%;
 	top:0;
 	left:0;
+	margin-right:1000px;
 }

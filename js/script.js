@@ -1,3 +1,7 @@
+var IND_BOX_WIDTH = 130;
+
+
+
 function readTextFile(file, callback) {
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET", file, false);
@@ -48,11 +52,11 @@ $().ready(function() {
     d3.csv("csv-index/index.csv", function(d) {
       return d;
     }, function(e, d) {
-      $('body').addClass('body-index');
       $orig_article = $('.article');
       for (var i = 0; i < d.length; i++) {
         $article = $orig_article.clone();
         readTextFile("txt-articles/" + d[i].filename + ".txt", function(text) {
+          $article.addClass('file-'+d[i].filename);
           title = text.split(/\n=+\n/)[0];
           content = text.split(/\n=+\n/)[1];
           $article.children('.title').text(title);
@@ -63,23 +67,53 @@ $().ready(function() {
 
         // $article.wrap($("<a>").attr('href', './?a=' + d[i].filename));
         $article.appendTo('.wrapper');
-        x = '<a href="./?a=' + d[i].filename + '">';
+        $article.hide();
+        x = '<a href="./?a=' + d[i].filename + '" class="click-items">';
         $article.wrap(x);
 
         after_loading();
       };
-      $orig_article.hide();
+      $orig_article.animate({
+        width:'100px'
+      },1000,'linear',function(){
+        $orig_article.animate({
+          width:'0px'
+        },2000,'easeInBack',function(){
+          $orig_article.remove();
+          setTimeout(function(){
+            $('body').addClass('body-index');
+          $('.article').show('slow');
+          }, 500);
+        });
+      });
+      // intval = setInterval(function(){
+      //   $('html, body').scrollLeft($('.wrapper').width()*2-$(window).width());
+      //   console.log($('.wrapper').width()-$(window).width())
+      // },30);
+      // $orig_article.animate({
+      //   'margin-right':'2000px'
+      // },3000,'swing',function(){
+      //   $orig_article.remove();
+      //   $('.article').show('slow');
+      //   clearInterval(intval);
+      // });
 
     });
 
   }
 
+  // var w =$(window);
+  // w.resize(function(event) {
+  //   $('.wrapper').width(w.width()).height(w.height());
+  // });
+  
+
 })
 
 function after_loading() {
   // if (loading_start) {
-  $('a').off("mouseenter mouseleave click");
-  $('a').hover(function() {
+  $('.click-items').off("mouseenter mouseleave click");
+  $('.click-items').hover(function() {
     $(this).find('h2').animate({
       'color': '#ccc'
     });
@@ -88,19 +122,39 @@ function after_loading() {
       'color': '#666'
     });
   });
-  //使所有 a 失效
-  // $('a').data('href', function() {
-  //   return $(this).attr('href');
-  // }).attr('onClick', "javascript: void(0);")
-  //   .attr('href', 'javascript:void(0)');
-  //   
+  // 使所有 a 失效
+  $('.click-items').data('href', function() {
+    return $(this).attr('href');
+  }).attr('onClick', "javascript: void(0);")
+    .attr('href', 'javascript:void(0)');
+    
   // 使 a 變成廷展而不是轉網頁  
-  // $('a').click(function() {
-  //   $(this).find('.article').animate({
-  //     width: '100%',
-  //   }, 'slow');
-  //   $(this).find('.trans').hide('slow');
-  // });
+  $('.click-items').click(function() {
+    var $master_article = $(this).find('.article');
+    // console.log($master_article);
+    var master_article = $master_article.attr('class').split('file-')[1].split(" ")[0];
+    // console.log(master_article);
+    $('.click-items').each(function(){
+      if($(this).find('.article').hasClass('file-'+master_article)){
+        if($(this).find('.article').hasClass('opened')){
+          var width = IND_BOX_WIDTH;
+          $(this).find('.trans').show('slow');  
+        }else{
+          var width = $(this).find('.title').width() + $(this).find('.content').width();
+          $(this).find('.trans').hide('slow');
+        }
+        $(this).find('.article').animate({
+          'width': width + 'px',
+        }, 'slow');
+        $(this).find('.article').toggleClass('opened');
+      }else{
+        $(this).find('.article').animate({
+          'width': IND_BOX_WIDTH + 'px',
+        }, 'slow').removeClass('opened');
+        $(this).find('.trans').show('slow');
+      }
+    })
+  });
 
   // }
   loading_start = false;
